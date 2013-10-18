@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F0AD5384-D29F-4498-971C-BD44469840EA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VisualSniffer</RootNamespace>
+    <AssemblyName>VisualSniffer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="packetFilter.cs" />
+    <Compile Include="dataModel.cs" />
+    <Compile Include="mainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainForm.Designer.cs">
+      <DependentUpon>mainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="packetInspector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="packetInspector.Designer.cs">
+      <DependentUpon>packetInspector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="icons.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>icons.resx</DependentUpon>
+    </Compile>
+    <Compile Include="snifferOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="snifferOptions.Designer.cs">
+      <DependentUpon>snifferOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="streamTracer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="streamTracer.Designer.cs">
+      <DependentUpon>streamTracer.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="mainForm.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="packetInspector.resx">
+      <DependentUpon>packetInspector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="icons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>icons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="snifferOptions.resx">
+      <DependentUpon>snifferOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="streamTracer.resx">
+      <DependentUpon>streamTracer.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PacketDotNet\PacketDotNet.csproj">
+      <Project>{55ABBA4C-AAF9-4726-A592-0C92436CEC92}</Project>
+      <Name>PacketDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpPcap\SharpPcap.csproj">
+      <Project>{24262E52-1304-4A25-8F73-A3B06E40592E}</Project>
+      <Name>SharpPcap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\hexViewer\HexViewer.csproj">
+      <Project>{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}</Project>
+      <Name>HexViewer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_to_shopping_cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attachment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cloud_comment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dollar_currency_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\equalizer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\euro_currency_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favourite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\film.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\full_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\globe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id_card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iphone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ipod.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\light_bulb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mobile_phone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\monitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prize_winner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\process.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\promotion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\protection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\put_in_shopping_cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\puzzle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\receive_mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove_from_shopping_cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rss.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search_mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\send_mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shopping_cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shopping_cart_accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sterling_pound_currency_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\television.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\users.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yen_currency_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_in.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_out.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
