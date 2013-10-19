@@ -24,7 +24,7 @@ namespace VisualSniffer
         }
     }
 
-    enum listenerStatus
+    public enum listenerStatus
     {
         online,
         offline
@@ -34,12 +34,12 @@ namespace VisualSniffer
     {
         public event newPacket onParseComplete;
         public List<sPacket> packList;
-        private packetListener() { packList = new List<sPacket>(); }
+        private packetListener() { packetArrivalEvent = new PacketArrivalEventHandler(packetArrive); packList = new List<sPacket>(); }
         public static packetListener Instance = new packetListener();
-        private int capDevIndex;
+        private PacketArrivalEventHandler packetArrivalEvent;
         public int[] devList;
-        private listenerStatus status = listenerStatus.offline;
-        
+        public listenerStatus status = listenerStatus.offline;
+
         private packetFilter onlineFilter = null;
         private string mFilterString;
         public string filterString
@@ -53,7 +53,7 @@ namespace VisualSniffer
             if (devList == null)
                 foreach (ICaptureDevice dev in CaptureDeviceList.Instance)
                 {
-                    dev.OnPacketArrival += new PacketArrivalEventHandler(packetArrive);
+                    dev.OnPacketArrival += packetArrivalEvent;
                     dev.Open();
                     dev.StartCapture();
                 }
@@ -68,15 +68,11 @@ namespace VisualSniffer
                 startCapture(i);
         }
 
-        public void resumeCapture()
-        {
-            startCapture();
-        }
-
         public void startCapture(int index)
         {
             ICaptureDevice dev = CaptureDeviceList.Instance[index];
-            dev.OnPacketArrival += new PacketArrivalEventHandler(packetArrive);
+
+            dev.OnPacketArrival += packetArrivalEvent;
 
             dev.Open();
             if (mFilterString != null)
@@ -92,6 +88,7 @@ namespace VisualSniffer
                 {
                     try
                     {
+                        dev.OnPacketArrival -= packetArrivalEvent;
                         dev.StopCapture();
                         dev.Close();
                     }
@@ -106,16 +103,15 @@ namespace VisualSniffer
 
         public void applyOnlineFilter(packetFilter f)
         {
-            stopCapture();
+            var needResume = (this.status == listenerStatus.online);
+
             onlineFilter = f;
             foreach (var i in packList)
-                if (f.pass(ref (i.packet)))
+                if (f==null || f.pass(ref (i.packet)))
                 {
                     var p = i;
                     onParseComplete(ref p);
                 }
-
-            resumeCapture();
         }
 
         void packetArrive(object sender, SharpPcap.CaptureEventArgs packet)
@@ -123,7 +119,7 @@ namespace VisualSniffer
                 PacketDotNet.Packet v = PacketDotNet.Packet.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
                 sPacket pp = new sPacket(ref v);
                 packList.Add(pp);
-                if (onlineFilter == null || (onlineFilter!=null && onlineFilter.pass(ref v)))
+                if (onlineFilter == null || onlineFilter.pass(ref v))
                     onParseComplete(ref pp);
         }
     }

@@ -230,11 +230,11 @@ namespace VisualSniffer
         private void listField(ref PacketDotNet.Packet targetPack)
         {
             if (targetPack is PacketDotNet.InternetLinkLayerPacket)
-                this.BackColor = Color.FromArgb(0x3c74f7);
+                this.BackColor = Color.FromArgb(0xffffff);
             else if (targetPack is PacketDotNet.InternetPacket)
-                this.BackColor = Color.FromArgb(0x5191FD);
+                this.BackColor = Color.FromArgb(0xccffff);
             else if (targetPack is TransportPacket)
-                this.BackColor = Color.FromArgb(0x1647E9);
+                this.BackColor = Color.FromArgb(0xccccff);
             
                
             switch (targetPack.GetType().Name)

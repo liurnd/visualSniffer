@@ -47,6 +47,7 @@ namespace VisualSniffer
             Application.SetCompatibleTextRenderingDefault(false);
             var f = new mainForm(); 
             packetListener.Instance.onParseComplete += new newPacket(f.addNewPacket);
+            //packetListener.Instance.applyOnlineFilter(filterGen.genFilter("tcp.SourcePort == 80 || tcp.DestinationPort == 80"));
             Application.Run(f);
             packetListener.Instance.stopCapture();
         }

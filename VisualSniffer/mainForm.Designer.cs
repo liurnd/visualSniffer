@@ -30,16 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.followTCPStreamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsOpenFile = new System.Windows.Forms.ToolStripButton();
             this.tsSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsStart = new System.Windows.Forms.ToolStripButton();
             this.tsStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsConfig = new System.Windows.Forms.ToolStripButton();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.tsFilterString = new System.Windows.Forms.ToolStripTextBox();
             this.tsFilter = new System.Windows.Forms.ToolStripButton();
             this.packList = new VisualSniffer.ListViewNF();
             this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,9 +50,11 @@
             this.chDestAddr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chLength = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -58,10 +62,14 @@
             // toolStripContainer1
             // 
             // 
+            // toolStripContainer1.BottomToolStripPanel
+            // 
+            this.toolStripContainer1.BottomToolStripPanel.Controls.Add(this.statusStrip1);
+            // 
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.packList);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(934, 323);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(934, 301);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
@@ -73,6 +81,23 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainer1.TopToolStripPanel.Click += new System.EventHandler(this.toolStripContainer1_TopToolStripPanel_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(934, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsStatus
+            // 
+            this.tsStatus.Name = "tsStatus";
+            this.tsStatus.Size = new System.Drawing.Size(39, 17);
+            this.tsStatus.Text = "Ready";
             // 
             // contextMenuStrip1
             // 
@@ -98,7 +123,7 @@
             this.tsStart,
             this.tsStop,
             this.tsConfig,
-            this.toolStripTextBox1,
+            this.tsFilterString,
             this.tsFilter});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -126,6 +151,11 @@
             this.tsSave.Text = "toolStripButton2";
             this.tsSave.Click += new System.EventHandler(this.toolStripButton2_Click_1);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // tsStart
             // 
             this.tsStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -144,11 +174,7 @@
             this.tsStop.Name = "tsStop";
             this.tsStop.Size = new System.Drawing.Size(23, 22);
             this.tsStop.Text = "toolStripButton5";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.tsStop.Click += new System.EventHandler(this.tsStop_Click);
             // 
             // tsConfig
             // 
@@ -160,10 +186,10 @@
             this.tsConfig.Text = "Config";
             this.tsConfig.Click += new System.EventHandler(this.tsConfig_Click);
             // 
-            // toolStripTextBox1
+            // tsFilterString
             // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(300, 25);
+            this.tsFilterString.Name = "tsFilterString";
+            this.tsFilterString.Size = new System.Drawing.Size(300, 25);
             // 
             // tsFilter
             // 
@@ -173,6 +199,7 @@
             this.tsFilter.Name = "tsFilter";
             this.tsFilter.Size = new System.Drawing.Size(23, 22);
             this.tsFilter.Text = "toolStripButton1";
+            this.tsFilter.Click += new System.EventHandler(this.tsFilter_Click);
             // 
             // packList
             // 
@@ -193,7 +220,7 @@
             this.packList.Location = new System.Drawing.Point(0, 0);
             this.packList.MultiSelect = false;
             this.packList.Name = "packList";
-            this.packList.Size = new System.Drawing.Size(934, 323);
+            this.packList.Size = new System.Drawing.Size(934, 301);
             this.packList.TabIndex = 0;
             this.packList.UseCompatibleStateImageBehavior = false;
             this.packList.View = System.Windows.Forms.View.Details;
@@ -239,11 +266,15 @@
             this.Text = "Packet List";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.mainForm_Load);
+            this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -268,10 +299,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsStop;
         private System.Windows.Forms.ToolStripButton tsConfig;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripTextBox tsFilterString;
         private System.Windows.Forms.ToolStripButton tsFilter;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem followTCPStreamToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatus;
 
     }
 }

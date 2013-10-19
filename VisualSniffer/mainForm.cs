@@ -87,6 +87,7 @@ namespace VisualSniffer
         private void tsStart_Click(object sender, EventArgs e)
         {
             packetListener.Instance.startCapture();
+            tsStatus.Text = "Running...";
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -97,6 +98,36 @@ namespace VisualSniffer
         private void tsConfig_Click(object sender, EventArgs e)
         {
             snifferOptions.Instance.Show();
+        }
+
+        private void tsStop_Click(object sender, EventArgs e)
+        {
+            tsStatus.Text = "Stopping...";
+            packetListener.Instance.stopCapture();
+            tsStatus.Text = "Ready";
+        }
+
+        private void tsFilter_Click(object sender, EventArgs e)
+        {
+           tsStatus.Text = "Stopping";
+            var needResume = (packetListener.Instance.status == listenerStatus.online);
+            if (needResume)
+                packetListener.Instance.stopCapture();
+
+            tsStatus.Text = "Compiling Filter ...";
+            Update();
+            var filter = filterGen.genFilter(tsFilterString.Text);
+
+
+            tsStatus.Text = "Applying Filter ...";
+            Update();
+            packList.Items.Clear();
+            packetListener.Instance.applyOnlineFilter(filter);
+            if (needResume)
+            {
+                packetListener.Instance.startCapture();
+                tsStatus.Text = "Running ...";
+            }
         }
     }
 

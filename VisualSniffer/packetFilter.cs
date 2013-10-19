@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
 namespace VisualSniffer
 {
     public abstract class packetFilter
@@ -118,9 +120,10 @@ namespace VisualSniffer
     public class tcpPortFilter : packetFilter
     {
         bool isSource; ushort port;
+        bool careSide;
         public tcpPortFilter(bool lisSource, ushort lport)
         {
-            isSource = lisSource; port = lport;
+            isSource = lisSource; port = lport; careSide = true;
         }
 
         public override bool pass(ref PacketDotNet.Packet p)
@@ -134,6 +137,53 @@ namespace VisualSniffer
                     return (tcp.DestinationPort == port);
             }
             return false;
+        }
+    }
+
+    public class filterGen
+    {
+        public static packetFilter genFilter(string filterS)
+        {
+            var compiler = new Microsoft.CSharp.CSharpCodeProvider();
+            var options = new CompilerParameters();
+            options.GenerateExecutable = false;
+            options.GenerateInMemory = true;
+            PacketDotNet.Packet p;
+            options.ReferencedAssemblies.Add(typeof(PacketDotNet.Packet).Assembly.Location);
+            options.ReferencedAssemblies.Add(typeof(filterGen).Assembly.Location);
+            var source = @"
+using System;
+using VisualSniffer;
+public class customFilter : packetFilter
+{
+public override bool pass(ref PacketDotNet.Packet p)
+        {
+try{
+var ip = p.Extract(typeof(PacketDotNet.IpPacket)) as PacketDotNet.IpPacket;
+var tcp = p.Extract(typeof(PacketDotNet.TcpPacket)) as PacketDotNet.TcpPacket;
+var udp = p.Extract(typeof(PacketDotNet.UdpPacket))as PacketDotNet.UdpPacket;
+return (" + filterS+@");
+}
+catch(Exception e)
+{
+return false;
+}
+        }
+} 
+            ";
+            var result = compiler.CompileAssemblyFromSource(options, source);
+            if (result.Errors.HasErrors)
+            {
+                foreach(var i in result.Errors)
+                {
+                    System.Diagnostics.Debugger.Log(0, "compile error", i.ToString());
+                }
+                return null;
+            }
+            else
+                return Activator.CreateInstance(result.CompiledAssembly.GetType("customFilter")) as packetFilter;
+
+
         }
     }
 }
