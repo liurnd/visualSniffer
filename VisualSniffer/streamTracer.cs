@@ -19,13 +19,21 @@ namespace VisualSniffer
         }
         public void showStream(sPacket p)
         {
-            myStream = new tcpStream(ref p);
+            try
+            {
+                myStream = new tcpStream(ref p);
+            }
+            catch (InvalidOperationException e)
+            {
+                MessageBox.Show("Error:" + e.ToString());
+                return;
+            }
             System.Net.IPEndPoint currentEndPoint;
             label1.Text = String.Format("TCP stream  Host:{0} Client{1}",new object[]{myStream.host.ToString(), myStream.client.ToString()});
             
             for (var segment = myStream.getNextSegment(out currentEndPoint); segment != null; segment = myStream.getNextSegment(out currentEndPoint))
             {
-                if (richTextBox1.SelectionBackColor == Color.Moccasin)
+                if (currentEndPoint.Equals(myStream.host))
                     richTextBox1.SelectionBackColor = Color.Lavender;
                 else
                     richTextBox1.SelectionBackColor = Color.Moccasin;
@@ -59,14 +67,25 @@ namespace VisualSniffer
             endPoint = firstEndPoint;
             var tcpP = p.packet.Extract(typeof(TcpPacket)) as TcpPacket;
             var seqStartNum = tcpP.SequenceNumber; uint endNum = 0;
-            for (; p!=null && Program.getSrcEndPoint(p.packet).Equals(firstEndPoint); p = viewer.getNext())
+            for (; p!=null; p = viewer.getNext())
             {
                 tcpP = p.packet.Extract(typeof(TcpPacket)) as TcpPacket;
-                endNum = Math.Max(endNum, tcpP.SequenceNumber + (uint)tcpP.BytesHighPerformance.BytesLength);
-                tmpList.Add(new KeyValuePair<uint, byte[]>(tcpP.SequenceNumber, tcpP.PayloadData));
-                if (tcpP.Fin || tcpP.Rst)
+                if (Program.getSrcEndPoint(p.packet).Equals(firstEndPoint))
+                {
+                    endNum = Math.Max(endNum, tcpP.SequenceNumber + (uint)tcpP.PayloadData.Length);
+                    tmpList.Add(new KeyValuePair<uint, byte[]>(tcpP.SequenceNumber, tcpP.PayloadData));
+                    if (tcpP.Fin || tcpP.Rst)
+                        break;
+                }
+                else if (tcpP.Ack && tcpP.PayloadData.Length == 0)
+                    continue;
+                else
                     break;
+                
             }
+
+            if (endNum == seqStartNum)
+                return null;
             
             var tmpByte = new byte[endNum - seqStartNum];
             foreach (var i in tmpList)
