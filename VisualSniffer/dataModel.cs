@@ -126,16 +126,43 @@ namespace VisualSniffer
             PacketDotNet.Packet v = PacketDotNet.Packet.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
             sPacket pp = new sPacket(ref v);
             packList.Add(pp);
+            var typeStr = pp.finalType.Name;
             foreach (var i in pyDissectorList)
                 if (i.Key.pass(ref v))
                 {
                     HLPacket tmpPacket;
                     if (i.Value.parsePacket(v, out tmpPacket))
+                    {
                         pp.finalType = typeof(HLPacket);
+                        typeStr = tmpPacket.packetType;
+                    }
                 }
+
+            if (_packetTypeCnt.ContainsKey(typeStr))
+                _packetTypeCnt[typeStr] += 1;
+            else
+                _packetTypeCnt[typeStr] = 1;
+
             if (onlineFilter == null || onlineFilter.pass(ref v))
                 onParseComplete(ref pp);
+        }
 
+        private Dictionary<string, uint> _packetTypeCnt = new Dictionary<string, uint>();
+        public Dictionary<string, uint> packetTypeCnt
+        {
+            get { return _packetTypeCnt; }
+        }
+
+        public uint packetCnt
+        {
+            get
+            {
+                uint tmp = 0;
+                foreach (ICaptureDevice dev in CaptureDeviceList.Instance)
+                    if (dev.Started)
+                        tmp += dev.Statistics.ReceivedPackets;
+                return tmp;
+            }
         }
     }
 }

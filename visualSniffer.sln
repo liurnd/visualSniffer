@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketDotNet", "PacketDotNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPcap", "SharpPcap\SharpPcap.csproj", "{24262E52-1304-4A25-8F73-A3B06E40592E}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "filterGen", "filterGen\filterGen.pyproj", "{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJBauer", "AJBauer\AJBauer.csproj", "{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,16 +63,16 @@ Global
 		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{24262E52-1304-4A25-8F73-A3B06E40592E}.Release|x86.ActiveCfg = Release|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{6147A610-9DA1-4E69-8EAF-5B2D51AB15CB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7F4E10D3-FFBE-476F-9D89-CF831D2EAFEC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

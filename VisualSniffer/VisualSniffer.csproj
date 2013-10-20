@@ -140,6 +140,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AJBauer\AJBauer.csproj">
+      <Project>{7f4e10d3-ffbe-476f-9d89-cf831d2eafec}</Project>
+      <Name>AJBauer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PacketDotNet\PacketDotNet.csproj">
       <Project>{55ABBA4C-AAF9-4726-A592-0C92436CEC92}</Project>
       <Name>PacketDotNet</Name>

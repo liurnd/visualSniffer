@@ -45,7 +45,9 @@ namespace VisualSniffer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var f = new mainForm(); 
+            var f = new mainForm();
+            var st = new statistics();
+            st.Show();
             packetListener.Instance.onParseComplete += new newPacket(f.addNewPacket);
             packetListener.Instance.parkPyDissector(new pyDissector("http.py"));
             //packetListener.Instance.applyOnlineFilter(filterGen.genFilter("tcp.SourcePort == 80 || tcp.DestinationPort == 80"));
