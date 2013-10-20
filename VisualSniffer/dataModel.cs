@@ -42,6 +42,8 @@ namespace VisualSniffer
 
         private packetFilter onlineFilter = null;
         private string mFilterString;
+        private Dictionary<packetFilter, pyDissector> pyDissectorList = new Dictionary<packetFilter, pyDissector>();
+
         public string filterString
         {
             get { return mFilterString; }
@@ -60,6 +62,11 @@ namespace VisualSniffer
             else
                 startCapture(devList);
 
+        }
+
+        public void parkPyDissector(pyDissector dis)
+        {
+            pyDissectorList[dis.myFilter] = dis;
         }
 
         public void startCapture(int[] list)
@@ -97,7 +104,7 @@ namespace VisualSniffer
                         Console.WriteLine(e.ToString());
                     }
                 }
-            
+
             status = listenerStatus.offline;
         }
 
@@ -107,7 +114,7 @@ namespace VisualSniffer
 
             onlineFilter = f;
             foreach (var i in packList)
-                if (f==null || f.pass(ref (i.packet)))
+                if (f == null || f.pass(ref (i.packet)))
                 {
                     var p = i;
                     onParseComplete(ref p);
@@ -116,11 +123,19 @@ namespace VisualSniffer
 
         void packetArrive(object sender, SharpPcap.CaptureEventArgs packet)
         {
-                PacketDotNet.Packet v = PacketDotNet.Packet.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
-                sPacket pp = new sPacket(ref v);
-                packList.Add(pp);
-                if (onlineFilter == null || onlineFilter.pass(ref v))
-                    onParseComplete(ref pp);
+            PacketDotNet.Packet v = PacketDotNet.Packet.ParsePacket(packet.Packet.LinkLayerType, packet.Packet.Data);
+            sPacket pp = new sPacket(ref v);
+            packList.Add(pp);
+            foreach (var i in pyDissectorList)
+                if (i.Key.pass(ref v))
+                {
+                    HLPacket tmpPacket;
+                    if (i.Value.parsePacket(v, out tmpPacket))
+                        pp.finalType = typeof(HLPacket);
+                }
+            if (onlineFilter == null || onlineFilter.pass(ref v))
+                onParseComplete(ref pp);
+
         }
     }
 }

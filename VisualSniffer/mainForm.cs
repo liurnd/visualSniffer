@@ -139,7 +139,10 @@ namespace VisualSniffer
             pack = v;
             SubItems.Clear();
             SubItems[0].Text=v.timestamp.ToLocalTime().ToLongTimeString();
-            SubItems.Add(v.finalType.Name);
+            if (v.finalType == typeof(HLPacket))
+                SubItems.Add((v.packet.Extract(typeof(HLPacket)) as HLPacket).packetType);
+            else
+                SubItems.Add(v.finalType.Name);
             string srcaddr, destaddr;
             if (v.packet.PayloadPacket != null && v.packet.PayloadPacket is IpPacket)
             {

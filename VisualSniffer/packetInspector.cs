@@ -200,6 +200,12 @@ namespace VisualSniffer
             addField("Length", p.Length.ToString(), UdpFields.HeaderLengthPosition, UdpFields.HeaderLengthLength);
         }
 
+        private void listField(ref HLPacket p)
+        {
+            foreach (var i in p.fieldList.OrderBy(u=>(int)u.Value[0]))
+                addField(i.Key, "", (int)i.Value[0],(int)i.Value[1]);
+        }
+
         private void listFieldEx(ref PacketDotNet.Packet targetPack)
         {
             //Get packet type name
@@ -262,6 +268,11 @@ namespace VisualSniffer
                 case "UdpPacket":
                     var udp = targetPack as UdpPacket;
                     listField(ref udp);
+                    break;
+                case "HLPacket":
+                    var hlp = targetPack as HLPacket;
+                    listField(ref hlp);
+                    Text = hlp.packetType;
                     break;
             }
             if (targetPack.PayloadPacket == null && targetPack.PayloadData != null)
